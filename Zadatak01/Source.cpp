@@ -30,13 +30,17 @@ void unosTocka(Tocka& a) {
 
 
 // Funkcija za kreiranje polja:
-void kreirajPolje(Tocka& a, Tocka& b)
+void kreirajPolje(Tocka& a, Tocka& b, Tocka& c)
 {
 	for (int i = 0; i <= 20; i++)
 	{
 		for (int j = 0; j <= 40; j++)
 		{
 			if (i == a.y && j == a.x) {
+				cout << '*';
+			}
+			else if (i == c.y && j == c.x)
+			{
 				cout << 'A';
 			}
 			else if (i == b.y && j == b.x)
@@ -77,60 +81,60 @@ void pomakniGore(Tocka& a)
 	cout << "a.y: " << a.y << endl;
 }
 
-void pomakniPoXOsi(Tocka& a, Tocka& b, int razmakX)
+void pomakniPoXOsi(Tocka& a, Tocka& b, int razmakX, Tocka& c)
 {
 	if (razmakX < 0)
 	{
 		razmakX *= -1;
 		pomakniDesno(a);
 		system("CLS");
-		kreirajPolje(a, b);
+		kreirajPolje(a, b, c);
 		cout << "Kreni desno za " << razmakX * -1 << endl;
 	}
 	else if (razmakX > 0)
 	{
 		pokaniLijevo(a);
 		system("CLS");
-		kreirajPolje(a, b);
+		kreirajPolje(a, b, c);
 		cout << "Kreni lijevo za " << razmakX << endl;
 	}
 }
 
-void pomakniPoYOsi(Tocka& a, Tocka& b, int razmakY)
+void pomakniPoYOsi(Tocka& a, Tocka& b, int razmakY, Tocka& c)
 {
 		if (razmakY < 0)
 		{
 			razmakY *= -1;
 			pomakniDolje(a);
 			system("CLS");
-			kreirajPolje(a, b);
+			kreirajPolje(a, b, c);
 			cout << "Kreni dolje za " << razmakY * -1 << endl;
 		}
 		else if (razmakY > 0)
 		{
 			pomakniGore(a);
 			system("CLS");
-			kreirajPolje(a, b);
+			kreirajPolje(a, b, c);
 			cout << "Kreni gore za " << razmakY << endl;
 		}
 }
 
-void osvjeziApp(Tocka& a, Tocka& b, int& razmakX, int& razmakY)
+void osvjeziApp(Tocka& a, Tocka& b, int& razmakX, int& razmakY, Tocka& c)
 {
 	cout << "Razmak X: " << razmakX << endl;
 	cout << "Razmak Y: " << razmakY << endl;
 	if (razmakX > 0 || razmakX < 0)
 	{
-		pomakniPoXOsi(a, b, razmakX);
+		pomakniPoXOsi(a, b, razmakX, c);
 	}
 	else
 	{
-		pomakniPoYOsi(a, b, razmakY);
+		pomakniPoYOsi(a, b, razmakY, c);
 	}
 
 }
 
-void pronadiPut(Tocka& a, Tocka& b, int& razmakX, int& razmakY)
+void pronadiPut(Tocka& a, Tocka& b, int& razmakX, int& razmakY, Tocka& c)
 {
 	int test = razmakX;
 	if (test < 0) { test *= -1; }
@@ -151,25 +155,27 @@ void pronadiPut(Tocka& a, Tocka& b, int& razmakX, int& razmakY)
 	//cout << "Razmak koordinata y: " << razmakY << endl;
 	//cout << "Koordinata Tocke A: " << "(" << a.x << "," << a.y << ")" << endl;
 	//cout << "Koordinata Tocke B: " << "(" << b.x << "," << b.y << ")" << endl;
-	Sleep(1000);
-	osvjeziApp(a, b, razmakX, razmakY);
+	Sleep(750);
+	osvjeziApp(a, b, razmakX, razmakY, c);
 }
 
 int main() {
 
 	Tocka a;
 	Tocka b;
+	Tocka c;
+
 	int razmakX = 1;
 	int razmakY = 1;
 	unosTocka(a);
 	unosTocka(b);
-	
+	c = a;
 	// Kreiram inicijalne koordinate:
-	kreirajPolje(a, b);
+	kreirajPolje(a, b, c);
 
 	// Pokrecem aplikaciju:
 	do {
-		pronadiPut(a, b, razmakX, razmakY);
+		pronadiPut(a, b, razmakX, razmakY, c);
 	} while (abs(razmakX) > 0 || abs(razmakY) > 0);
 
 	return 0;
